@@ -1,5 +1,9 @@
 @import url();
-
+a {
+  color: #4d78cc;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 30px;
+}
 body {
   background-color: black;
 }
