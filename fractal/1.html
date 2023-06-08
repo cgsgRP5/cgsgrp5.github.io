@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="UTF_8" />
+    <title>RP5 shady mandelbrot</title>
+    <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+    <p>
+        RP5 TEST webpage
+    </p>
+    <script type="module">
+        import * as lib from "./main.js";
+        window.addEventListener("load", () => {
+            lib.initGL();
+            window.setInterval(() => lib.Draw(), 10)
+        });
+    </script>
+    <div>
+        <canvas id="3dwebgl" width="800" height="800"></canvas>
+    </div>
+
+</body>
+
+</html>

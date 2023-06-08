@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>RP5 platonic solids</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="ICON" href="./bin/favcgsg2.png" type="image/png" />
+</head>
+
+<body>
+    <p id="fps">30</p>
+    <canvas id = "glCanvas" width="800" height="800"></canvas>
+    <script type="module">
+        import { system, _system, mat4, _mat4, vec3, _vec3, getTextFromFile } from "./all_h.js";
+
+        window.addEventListener("load", () => {
+            let sys = system("glCanvas");
+            let mtlPat = sys.render.mtlpatCreate("P(f3)", "Ka(f3), Kd(f3), Ks(f3), (f3)","./shaders/3d",  0);
+            let mtl = sys.render.mtlCreate("mtl_name",  mtlPat, "Ka(1, 1, 1), Ks(3, 3, 1), Kd(1.6, 10, 1), Ph(0, 4)");
+            let prim;
+            
+            let a = "-3*sqrt(5)+3)".indexOf("sqrt");
+            getTextFromFile("./coords/icosahedron.txt").then((res)=>{
+                const mas = res.split("==");
+                const V = mas[0].split(',');                
+                const I = mas[1].split(',');
+                for (let i = 0; i<V.length;i++)
+                    V[i] = Number(V[i]);
+                for (let i = 0; i<I.length;i++)
+                    I[i] = Number(I[i]);
+                prim = sys.render.primCreate("triangle", V, I,  mtl);
+                prim.draw(mat4());
+            });
+
+            const def = vec3(0, 0, 3) 
+            let loc = vec3(0, 0, 3);
+            
+            const draw = ()=>{
+                sys.render.camera.set(loc, vec3(0), vec3(0, 1, 0));
+                
+                loc = mat4().rotateY(sys.render.timer.globalTime / 15 * 360).pointTransform(def);
+
+                sys.render.start();
+
+                
+                sys.render.end();
+                window.requestAnimationFrame(draw); 
+            }
+            draw();
+
+        });
+    </script>
+    <form name="slide" method="get"> 
+        <input id="slider1" type="range" min="-60" max="60" step="0.01"/>
+        <input id="button1" type="button"/>
+    </form>
+</body>
+
+</html>

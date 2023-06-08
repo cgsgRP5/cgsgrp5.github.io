@@ -1,0 +1,10 @@
+@import url();
+
+body {
+    background-color: black;
+    color: aqua;
+}
+
+canvas {
+    filter: blur(2px);
+}
