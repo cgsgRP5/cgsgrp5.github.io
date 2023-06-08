@@ -188,7 +188,7 @@ export class _camera {
     Ttp->PipelineDebugMode = !Ttp->PipelineDebugMode;
   */
 
-    this.camSet(
+    this.set(
       mat4()
         .matrMulmatr(
           mat4().rotateX(Elevator),

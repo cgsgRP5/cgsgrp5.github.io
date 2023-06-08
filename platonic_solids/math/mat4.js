@@ -264,7 +264,7 @@ export class _mat4 {
 
     return this;
   }
-  unpack() {
+  toArray() {
     return [
       this.m[0][0],
       this.m[0][1],

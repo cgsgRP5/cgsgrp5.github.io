@@ -71,10 +71,10 @@ export class _render {
     prim.mtl.ubo[0].update(
       this.gl,
       new Float32Array([
-        ...mat4().matrMulmatr(prim.mTrans, this.camera.matrVP).unpack(),
-        ...this.camera.matrVP.unpack(),
-        ...mat4().ortho(-1, 1, -1, 1, -1, 1).unpack(),
-        /*...prim.mTrans.unpack(),*/
+        ...mat4().matrMulmatr(prim.mTrans, this.camera.matrVP).toArray(),
+        ...this.camera.matrVP.toArray(),
+        ...mat4().ortho(-1, 1, -1, 1, -1, 1).toArray(),
+        /*...prim.mTrans.toArray(),*/
       ])
     );
     prim.mtl.ubo[0].apply(this.gl, prim.mtl.shd.program);
