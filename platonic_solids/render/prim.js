@@ -88,6 +88,7 @@ export class _prim {
         j++
       ) {
         const name = admisName[mtl.mtlPat.vForm.args[i].name][j];
+        console.log(name);
         if (mtl.shd.attrs[name] != undefined) {
           const loc = mtl.shd.attrs[name].loc;
           gl.vertexAttribPointer(

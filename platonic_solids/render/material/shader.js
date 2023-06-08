@@ -1,5 +1,5 @@
 /* Shader module */
-import { _prim, getTextFromFile } from "./../../all_h.js";
+import { _buffer, _prim, getTextFromFile } from "./../../all_h.js";
 
 function ShaderUploadToGL(
   /** @type {WebGL2RenderingContext}*/ gl,
@@ -53,7 +53,11 @@ export class _shader {
     this.pass = pass;
   }
 
-  loadPos = (/** @type {_prim}*/ prim, V, I) => {
+  loadPos = (
+    /** @type {_prim}*/ prim,
+    /** @type {_buffer}*/ V,
+    /** @type {_buffer}*/ I
+  ) => {
     const gl = this.gl;
     if (I == undefined || I == null) prim.numOfV = V.length / 3;
     else prim.numOfV = I.length;
