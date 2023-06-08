@@ -52,7 +52,7 @@ export class _timer {
     }
     // FPS
     this.frameCounter++;
-    if (t - this.oldTimeFPS > 3) {
+    if (t - this.oldTimeFPS > 0.5) {
       this.FPS = this.frameCounter / (t - this.oldTimeFPS);
       this.oldTimeFPS = t;
       this.frameCounter = 0;

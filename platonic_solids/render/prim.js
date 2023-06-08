@@ -102,7 +102,7 @@ export class _prim {
           gl.enableVertexAttribArray(loc);
           break;
         }
-        alert("shader have not Pos but material patern have");
+        alert("_shader have no pos but _materialPat have");
       }
     }
   }

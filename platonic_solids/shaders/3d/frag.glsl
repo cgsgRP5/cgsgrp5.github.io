@@ -13,8 +13,8 @@ in vec3 DrawNormal;
 */
 
 void main(void) {
-    out_color = vec4(DrawPos, 1);
-    out_color = DrawColor;
+  out_color = vec4(DrawPos, 1);
+  out_color = DrawColor;
     /*
   if (IsTexture0)
     OutColor = vec4(texture(InTextures[0], TexCoord).rgb, 1);
