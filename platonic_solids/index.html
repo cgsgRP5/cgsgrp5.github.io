@@ -22,13 +22,13 @@
             let prim = sys.render.primCreate("triangle", icostar.V, icostar.I, mtl);
             prim.draw(mat4());
 
-            const def = vec3(0, 0, 3) 
+            const def = vec3(0, 2, 3) 
             let loc = def;
             
             const draw = ()=>{
                 sys.render.camera.set(loc, vec3(0), vec3(0, 1, 0));
                 
-                loc = mat4().rotateY(sys.render.timer.globalTime / 15 * 360).pointTransform(def);
+                loc = mat4().rotateY(Math.tan(sys.render.timer.globalTime / 2) * 2 + sys.render.timer.globalTime * 4).pointTransform(def);
 
                 sys.render.start();
 

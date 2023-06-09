@@ -13,8 +13,14 @@ in vec3 DrawNormal;
 
 */
 
+vec3 getColor(vec3 C, int q) {
+  vec3 color = DrawPos - C;
+  for(int i = 0; i < q; i++) {
+  }
+  return color;
+}
+
 void main(void) {
   float l = length(DrawPos.xyz);
-  out_color = vec4(DrawPos, 1);
-  out_color = vec4(vec3(l * l), 1);
+  out_color = vec4(vec3(0, 0, 1) * vec3(l * l * l * l * l), 1);
 }

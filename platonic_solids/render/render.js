@@ -89,8 +89,6 @@ export class _render {
   primDrawInstace() {}
   */
   end() {
-    //this.camera.update(this.input, this.timer);
-    //this.input.reset();
     this.timer.response("fps");
 
     _render.allPrims.forEach((prim, ind) => {
