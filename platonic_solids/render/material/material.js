@@ -52,7 +52,7 @@ export class _material {
         }
     });
 
-    this.ubo[0] = ubo(gl, 48, 0, "Matrix");
+    this.ubo[0] = ubo(gl, 64, 0, "Matrix");
     this.ubo[1] = ubo(gl, masMtl, 1, "material");
     this.ubo[2] = userUbo;
 

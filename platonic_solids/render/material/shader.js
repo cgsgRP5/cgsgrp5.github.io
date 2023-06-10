@@ -53,11 +53,11 @@ export class _shader {
     this.pass = pass;
   }
 
-  loadPos = (
+  loadPos(
     /** @type {_prim}*/ prim,
     /** @type {_buffer}*/ V,
     /** @type {_buffer}*/ I
-  ) => {
+  ) {
     const gl = this.gl;
     if (I == undefined || I == null) prim.numOfV = V.length / 3;
     else prim.numOfV = I.length;
@@ -83,7 +83,7 @@ export class _shader {
     // const posLoc = gl.getAttribLocation(this.program, "in_pos");
     // gl.enableVertexAttribArray(posLoc);
     // gl.vertexAttribPointer(posLoc, 3, gl.FLOAT, false, 0, 0);
-  };
+  }
   apply(gl) {
     gl.useProgram(this.program);
   }

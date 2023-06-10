@@ -41,15 +41,18 @@ export class _vec3 {
   norm() {
     return this.div(this.len());
   }
-  dot(vec) {
-    return this.x * vec.x + this.y * vec.y + this.z * vec.z;
+  dot(vec3) {
+    return this.x * vec3.x + this.y * vec3.y + this.z * vec3.z;
   }
-  cross(vec) {
+  cross(vec3) {
     return this.set(
-      this.y * vec.z - this.z * vec.y,
-      -this.x * vec.z + this.z * vec.x,
-      this.x * vec.y - this.y * vec.x
+      this.y * vec3.z - this.z * vec3.y,
+      -this.x * vec3.z + this.z * vec3.x,
+      this.x * vec3.y - this.y * vec3.x
     );
+  }
+  toArray4() {
+    return [this.x, this.y, this.z, 0];
   }
 }
 

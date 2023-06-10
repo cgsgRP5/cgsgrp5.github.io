@@ -1,11 +1,11 @@
-import { vec3 } from "../all_h.js";
+import { _vec3, vec3 } from "../all_h.js";
 
 const sqrt5 = Math.sqrt(5);
 const div1sqrt5 = 1 / sqrt5;
 const sqrt01mul5subsqr5 = Math.sqrt(0.1 * (5 - sqrt5));
 const sqrt01mul5addsqr5 = Math.sqrt(0.1 * (5 + sqrt5));
 
-const icosahedronVB = [
+const icosahedronV = [
   0,
   1,
   0,
@@ -83,5 +83,57 @@ const icostarIB = [
   6, 10, 2, 7, 6, 3, 8, 7, 4, 9, 8, 5, 10, 9, 1,
 ];
 
-export const icosahedron = { V: icosahedronVB, I: icosahedronIB };
-export const icostar = { V: icosahedronVB, I: icostarIB };
+var icosahedronN = [];
+var icostarN = [];
+
+var icosahedronVB = [];
+var icostarVB = [];
+
+function getVB(figure) {
+  var VB = figure.VB;
+  var V = figure.V;
+  var I = figure.I;
+  var N = figure.N;
+  for (let i = 0; i < V.length; i++) N.push(0);
+  for (let i = 0; i < I.length - 2; i += 3) {
+    const p0 = vec3(V[I[i]], V[I[i] + 1], V[I[i] + 2]);
+    const p1 = vec3(V[I[i + 1]], V[I[i + 1] + 1], V[I[i + 1] + 2]);
+    const p2 = vec3(V[I[i + 2]], V[I[i + 2] + 1], V[I[i + 2] + 2]);
+    var n = p1.sub(p0).cross(p2.sub(p0)).norm();
+    (N[I[i] * 3] += n.x), (N[I[i] * 3 + 1] += n.y), (N[I[i] * 3 + 2] += n.z);
+    (N[I[i + 1] * 3] += n.x),
+      (N[I[i + 1] * 3 + 1] += n.y),
+      (N[I[i + 1] * 3 + 2] += n.z);
+    (N[I[i + 2] * 3] += n.x),
+      (N[I[i + 2] * 3 + 1] += n.y),
+      (N[I[i + 2] * 3 + 2] += n.z);
+  }
+  for (let i = 0; i < V.length - 2; i += 3) {
+    let n = vec3(N[i], N[i + 1], N[i + 2]).norm();
+    VB.push(V[i], V[i + 1], V[i + 2], n.x, n.y, n.z);
+  } /*
+  for (let i = 0; i < V.length - 2; i += 3) {
+    VB.push(V[i], V[i + 1], V[i + 2]);
+  }
+  for (let i = 0; i < N.length - 2; i += 3) {
+    var l = vec3(N[i], N[i + 1], N[i + 2]).len();
+    (N[i] /= l), (N[i + 1] /= l), (N[i + 2] /= l);
+    VB.push(N[i], N[i + 1], N[i + 2]);
+  }    */
+}
+
+export const icosahedron = {
+  VB: icosahedronVB,
+  V: icosahedronV,
+  I: icosahedronIB,
+  N: icosahedronN,
+};
+export const icostar = {
+  VB: icostarVB,
+  V: icosahedronV,
+  I: icostarIB,
+  N: icostarN,
+};
+
+if (icosahedron.VB.length == 0) getVB(icosahedron);
+if (icostar.VB.length == 0) getVB(icostar);

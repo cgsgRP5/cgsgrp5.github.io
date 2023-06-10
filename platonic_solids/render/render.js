@@ -74,10 +74,15 @@ export class _render {
         ...mat4().matrMulmatr(prim.mTrans, this.camera.matrVP).toArray(),
         ...this.camera.matrVP.toArray(),
         ...mat4().ortho(-1, 1, -1, 1, -1, 1).toArray(),
-        /*...prim.mTrans.toArray(),*/
+        ...this.camera.loc.toArray4(),
+        ...this.camera.at.toArray4(),
+        ...this.camera.up.toArray4(),
+        ...this.camera.right.toArray4(),
       ])
     );
     prim.mtl.ubo[0].apply(this.gl, prim.mtl.shd.program);
+
+    // prim.mtl.ubo.update(this.gl, new Float32Array([]));
 
     this.gl.bindVertexArray(prim.VA);
     if (prim.IB != undefined) {
@@ -85,9 +90,7 @@ export class _render {
       this.gl.drawElements(prim.type, prim.numOfV, this.gl.UNSIGNED_SHORT, 0);
     } else this.gl.drawArrays(prim.type, 0, prim.numOfV);
   }
-  /*
-  primDrawInstace() {}
-  */
+
   end() {
     this.timer.response("fps");
 
@@ -97,7 +100,6 @@ export class _render {
         prim.isDelete === false &&
         prim.isCreated === true
       ) {
-        //let loc;
         /* UBO and uniforms */
         this.primDraw(prim);
       } else if (prim.isDelete === true && prim.isCreated === true) {

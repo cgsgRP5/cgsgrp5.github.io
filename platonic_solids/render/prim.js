@@ -60,6 +60,7 @@ export class _prim {
   del() {
     if (this.isCreated != true) this.isDelete = false;
   }
+
   loadV(
     /** @type {WebGL2RenderingContext} */ gl,
     /** @type {_buffer} */ V,
@@ -88,7 +89,7 @@ export class _prim {
         j++
       ) {
         const name = admisName[mtl.mtlPat.vForm.args[i].name][j];
-        console.log(name);
+        // console.log(name);
         if (mtl.shd.attrs[name] != undefined) {
           const loc = mtl.shd.attrs[name].loc;
           gl.vertexAttribPointer(

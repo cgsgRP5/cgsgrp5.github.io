@@ -4,7 +4,7 @@ export class _materialPat {
   name;
 
   vForm;
-  vFormAllSize;
+  vFormAllSize = 0;
 
   mForm;
   mFormAllSize;
@@ -22,14 +22,14 @@ export class _materialPat {
       i < this.vForm.len && this.vForm.args[i].size != undefined;
       i++
     )
-      this.vFormAllSize = this.vForm.args[i].size;
+      this.vFormAllSize += this.vForm.args[i].size;
     this.mForm = parser(mForm);
     for (
       let i = 0;
       i < this.mForm.len && this.mForm.args[i].size != undefined;
       i++
     )
-      this.mFormAllSize = this.mForm.args[i].size;
+      this.mFormAllSize += this.mForm.args[i].size;
   }
 }
 

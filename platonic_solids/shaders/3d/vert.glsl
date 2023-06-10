@@ -3,22 +3,32 @@
 precision highp float;
 
 in vec3 in_pos;
-in vec3 in_normal;
+in vec3 in_norm;
 
-uniform Matrix {
+uniform Matrix
+{
   mat4 WVP;
   mat4 VP;
   mat4 W;
+  vec4 CamLoc;
+  vec4 CamAt;
+  vec4 CamUp;
+  vec4 CamRight;
 };
 
 out vec3 DrawPos;
 out vec4 DrawColor;
 out vec3 DrawNormal;
+out vec3 Loc, At, Up, Right;
 
-void main(void) {
-  //gl_Position = vec4((VP * in_pos).xyz, 1);
+void main(void)
+{
   gl_Position = WVP * vec4(in_pos, 1);
   DrawPos = in_pos;
   DrawColor = vec4(in_pos.rgb, 1);
-  DrawNormal = in_normal;
+  DrawNormal = normalize(mat3(transpose(inverse(W))) * in_norm);
+  Loc = CamLoc.xyz;
+  At = CamAt.xyz;
+  Up = CamUp.xyz;
+  Right = CamRight.xyz;
 }

@@ -16,19 +16,21 @@
 
         window.addEventListener("load", () => {
             let sys = system("glCanvas");
-            let mtlPat = sys.render.mtlpatCreate("P(f3)", "Ka(f3), Kd(f3), Ks(f3), (f3)","./shaders/3d",  0);
-            let mtl = sys.render.mtlCreate("mtl_name",  mtlPat, "Ka(1, 1, 1), Ks(3, 3, 1), Kd(1.6, 10, 1), Ph(0, 4)");
-            //let prim = sys.render.primCreate("triangle", icosahedron.V, icosahedron.I, mtl);
-            let prim = sys.render.primCreate("triangle", icostar.V, icostar.I, mtl);
-            prim.draw(mat4());
+            let mtlPat = sys.render.mtlpatCreate("P(f3), N(f3)", "Ka(f3), Kd(f3), Ks(f3), Ph(f1)","./shaders/3d",  0);
+            let mtl = sys.render.mtlCreate("mtl_name",  mtlPat, "Ka(1, 1, 1), Ks(3, 3, 1), Kd(1.6, 10, 1), Ph(30)");
+            let prim = sys.render.primCreate("triangle", icosahedron.VB, icosahedron.I, mtl);
+            //let prim = sys.render.primCreate("triangle", icostar.VB, icostar.I, mtl);
 
-            const def = vec3(0, 2, 3) 
-            let loc = def;
-            
+            let x = 0;
+            const def = vec3(1, 2, 3); 
+            let loc = vec3(1, 2, 3);
+            prim.draw(mat4()/*.rotateY(x += sys.render.timer.globalDeltaTime * 8).pointTransform(def)*/);
+
             const draw = ()=>{
                 sys.render.camera.set(loc, vec3(0), vec3(0, 1, 0));
                 
                 loc = mat4().rotateY(Math.tan(sys.render.timer.globalTime / 2) * 2 + sys.render.timer.globalTime * 4).pointTransform(def);
+                //loc = vec3(1, 2, 3);
 
                 sys.render.start();
 
