@@ -2,21 +2,28 @@
 a {
   color: #4d78cc;
   font-family: "Courier New", Courier, monospace;
-  font-size: 30px;
+  font-size: 24px;
 }
+
 body {
   background-color: black;
 }
 
 h1 {
-  background-color: whitesmoke;
+  color: #4d78cc;
+  background-color: black;
   font-family: "Courier New", Courier, monospace;
-  filter: blur(1);
 }
 
 p {
   color: #4d78cc;
   font-family: "Courier New", Courier, monospace;
-  font-size: 30px;
-  filter: blur(1);
+  font-size: 24px;
+}
+
+li {
+  color: #4d78cc;
+  background-color: black;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 24px;
 }
