@@ -80,7 +80,7 @@ export class _render {
         ...this.camera.right.toArray4(),
       ])
     );
-    prim.mtl.ubo[0].apply(this.gl, prim.mtl.shd.program);
+    prim.mtl.ubo[0].apply(this.gl, prim.mtl.shd.program, 0);
 
     // prim.mtl.ubo.update(this.gl, new Float32Array([]));
 
