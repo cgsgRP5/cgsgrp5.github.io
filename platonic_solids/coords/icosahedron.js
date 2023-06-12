@@ -89,37 +89,42 @@ var icostarN = [];
 var icosahedronVB = [];
 var icostarVB = [];
 
-function getVB(figure) {
-  var VB = figure.VB;
-  var V = figure.V;
-  var I = figure.I;
-  var N = figure.N;
+function getNormals(V, I, N) {
   for (let i = 0; i < V.length; i++) N.push(0);
   for (let i = 0; i < I.length - 2; i += 3) {
     const p0 = vec3(V[I[i]], V[I[i] + 1], V[I[i] + 2]);
     const p1 = vec3(V[I[i + 1]], V[I[i + 1] + 1], V[I[i + 1] + 2]);
     const p2 = vec3(V[I[i + 2]], V[I[i + 2] + 1], V[I[i + 2] + 2]);
     var n = p1.sub(p0).cross(p2.sub(p0)).norm();
-    (N[I[i] * 3] += n.x), (N[I[i] * 3 + 1] += n.y), (N[I[i] * 3 + 2] += n.z);
-    (N[I[i + 1] * 3] += n.x),
-      (N[I[i + 1] * 3 + 1] += n.y),
-      (N[I[i + 1] * 3 + 2] += n.z);
-    (N[I[i + 2] * 3] += n.x),
-      (N[I[i + 2] * 3 + 1] += n.y),
-      (N[I[i + 2] * 3 + 2] += n.z);
+    N[I[i + 0] * 3 + 0] += n.x;
+    N[I[i + 0] * 3 + 1] += n.y;
+    N[I[i + 0] * 3 + 2] += n.z;
+
+    N[I[i + 1] * 3 + 0] += n.x;
+    N[I[i + 1] * 3 + 1] += n.y;
+    N[I[i + 1] * 3 + 2] += n.z;
+
+    N[I[i + 2] * 3 + 0] += n.x;
+    N[I[i + 2] * 3 + 1] += n.y;
+    N[I[i + 2] * 3 + 2] += n.z;
   }
+}
+
+function getVB(figure) {
+  var VB = figure.VB;
+  var V = figure.V;
+  var I = figure.I;
+  var N = figure.N;
+  var C = figure.C;
+
+  getNormals(V, I, N);
+
   for (let i = 0; i < V.length - 2; i += 3) {
-    let n = vec3(N[i], N[i + 1], N[i + 2]).norm();
+    let n = vec3(V[i] - C.x, V[i + 1] - C.y, V[i + 2] - C.z).norm();
+    // if (n.x * n.z < 0) n.negate();
+    // VB.push(V[i], V[i + 1], V[i + 2], n.x, n.y, n.z);
     VB.push(V[i], V[i + 1], V[i + 2], n.x, n.y, n.z);
-  } /*
-  for (let i = 0; i < V.length - 2; i += 3) {
-    VB.push(V[i], V[i + 1], V[i + 2]);
   }
-  for (let i = 0; i < N.length - 2; i += 3) {
-    var l = vec3(N[i], N[i + 1], N[i + 2]).len();
-    (N[i] /= l), (N[i + 1] /= l), (N[i + 2] /= l);
-    VB.push(N[i], N[i + 1], N[i + 2]);
-  }    */
 }
 
 export const icosahedron = {
@@ -127,12 +132,14 @@ export const icosahedron = {
   V: icosahedronV,
   I: icosahedronIB,
   N: icosahedronN,
+  C: vec3(0),
 };
 export const icostar = {
   VB: icostarVB,
   V: icosahedronV,
   I: icostarIB,
   N: icostarN,
+  C: vec3(0),
 };
 
 if (icosahedron.VB.length == 0) getVB(icosahedron);

@@ -38,6 +38,12 @@ export class _vec3 {
   len() {
     return Math.sqrt(this.len2());
   }
+  negate() {
+    this.x *= -1;
+    this.y *= -1;
+    this.z *= -1;
+    return this;
+  }
   norm() {
     return this.div(this.len());
   }
