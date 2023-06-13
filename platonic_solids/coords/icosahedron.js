@@ -1,5 +1,32 @@
 import { _vec3, vec3 } from "../all_h.js";
 
+const sqrt3 = Math.sqrt(3);
+
+const octahedronV = [
+  vec3(0, 1, 0),
+  vec3(1, 0, 0),
+  vec3(0, 0, 1),
+  vec3(-1, 0, 0),
+  vec3(0, 0, -1),
+  vec3(0, -1, 0),
+];
+
+const octahedronI = [
+  0, 1, 2, 0, 2, 3, 0, 3, 4, 0, 4, 1, 5, 1, 2, 5, 2, 3, 5, 3, 4, 5, 4, 1,
+];
+
+var octahedronN = [];
+var octahedronVB = [];
+
+export const octahedron = {
+  VB: octahedronVB,
+  V: octahedronV,
+  I: octahedronI,
+  N: octahedronN,
+  C: vec3(2, 0, 2),
+};
+
+// icosahedron
 const sqrt5 = Math.sqrt(5);
 const div1sqrt5 = 1 / sqrt5;
 const sqrt01mul5subsqr5 = Math.sqrt(0.1 * (5 - sqrt5));
@@ -54,6 +81,23 @@ var icostarN = [];
 var icosahedronVB = [];
 var icostarVB = [];
 
+export const icosahedron = {
+  VB: icosahedronVB,
+  V: icosahedronV,
+  I: icosahedronIB,
+  N: icosahedronN,
+  C: vec3(0),
+};
+export const icostar = {
+  VB: icostarVB,
+  V: icosahedronV,
+  I: icostarIB,
+  N: icostarN,
+  C: vec3(0),
+};
+
+// functions
+
 function getNormals(V, I, N) {
   for (let i = 0; i < V.length; i++) N.push(vec3(0));
   for (let i = 0; i < I.length - 2; i += 3) {
@@ -78,24 +122,10 @@ function getVB(figure) {
   getNormals(V, I, N);
 
   for (let i = 0; i < V.length; i++) {
-    VB.push(...V[i].toArrayV(), ...N[i].toArrayV());
+    VB.push(...(V[i].add(C)).toArrayV(), ...N[i].toArrayV());
   }
 }
 
-export const icosahedron = {
-  VB: icosahedronVB,
-  V: icosahedronV,
-  I: icosahedronIB,
-  N: icosahedronN,
-  C: vec3(0),
-};
-export const icostar = {
-  VB: icostarVB,
-  V: icosahedronV,
-  I: icostarIB,
-  N: icostarN,
-  C: vec3(0),
-};
-
 if (icosahedron.VB.length == 0) getVB(icosahedron);
 if (icostar.VB.length == 0) getVB(icostar);
+if (octahedron.VB.length == 0) getVB(octahedron);

@@ -13,7 +13,7 @@ import { timer, _timer } from "./render/timer.js";
 import { parser } from "./tools/parser.js";
 import { getTextFromFile } from "./tools/textload.js";
 import { system, _system } from "./main.js";
-import { icosahedron, icostar } from "./coords/icosahedron.js";
+import { icosahedron, icostar, octahedron } from "./coords/icosahedron.js";
 
 export {
   glContext,
@@ -48,4 +48,5 @@ export {
   _system,
   icosahedron,
   icostar,
+  octahedron,
 };
