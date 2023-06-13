@@ -6,53 +6,18 @@ const sqrt01mul5subsqr5 = Math.sqrt(0.1 * (5 - sqrt5));
 const sqrt01mul5addsqr5 = Math.sqrt(0.1 * (5 + sqrt5));
 
 const icosahedronV = [
-  0,
-  1,
-  0,
-
-  2 / sqrt5,
-  div1sqrt5,
-  0,
-
-  0.5 - 0.1 * sqrt5,
-  div1sqrt5,
-  -sqrt01mul5addsqr5,
-
-  -0.5 - 0.1 * sqrt5,
-  div1sqrt5,
-  -sqrt01mul5subsqr5,
-
-  -0.5 - 0.1 * sqrt5,
-  div1sqrt5,
-  sqrt01mul5subsqr5,
-
-  0.5 - 0.1 * sqrt5,
-  div1sqrt5,
-  sqrt01mul5addsqr5,
-
-  0.5 + 0.5 / sqrt5,
-  -div1sqrt5,
-  -sqrt01mul5subsqr5,
-
-  0.1 * sqrt5 - 0.5,
-  -div1sqrt5,
-  -sqrt01mul5addsqr5,
-
-  -2 / sqrt5,
-  -div1sqrt5,
-  0,
-
-  0.1 * sqrt5 - 0.5,
-  -div1sqrt5,
-  sqrt01mul5addsqr5,
-
-  0.5 + 0.5 / sqrt5,
-  -div1sqrt5,
-  sqrt01mul5subsqr5,
-
-  0,
-  -1,
-  0,
+  vec3(0, 1, 0),
+  vec3(2 / sqrt5, div1sqrt5, 0),
+  vec3(0.5 - 0.1 * sqrt5, div1sqrt5, -sqrt01mul5addsqr5),
+  vec3(-0.5 - 0.1 * sqrt5, div1sqrt5, -sqrt01mul5subsqr5),
+  vec3(-0.5 - 0.1 * sqrt5, div1sqrt5, sqrt01mul5subsqr5),
+  vec3(0.5 - 0.1 * sqrt5, div1sqrt5, sqrt01mul5addsqr5),
+  vec3(0.5 + 0.5 / sqrt5, -div1sqrt5, -sqrt01mul5subsqr5),
+  vec3(0.1 * sqrt5 - 0.5, -div1sqrt5, -sqrt01mul5addsqr5),
+  vec3(-2 / sqrt5, -div1sqrt5, 0),
+  vec3(0.1 * sqrt5 - 0.5, -div1sqrt5, sqrt01mul5addsqr5),
+  vec3(0.5 + 0.5 / sqrt5, -div1sqrt5, sqrt01mul5subsqr5),
+  vec3(0, -1, 0),
 ];
 
 const icosahedronIB = [
@@ -90,24 +55,17 @@ var icosahedronVB = [];
 var icostarVB = [];
 
 function getNormals(V, I, N) {
-  for (let i = 0; i < V.length; i++) N.push(0);
+  for (let i = 0; i < V.length; i++) N.push(vec3(0));
   for (let i = 0; i < I.length - 2; i += 3) {
-    const p0 = vec3(V[I[i]], V[I[i] + 1], V[I[i] + 2]);
-    const p1 = vec3(V[I[i + 1]], V[I[i + 1] + 1], V[I[i + 1] + 2]);
-    const p2 = vec3(V[I[i + 2]], V[I[i + 2] + 1], V[I[i + 2] + 2]);
+    const p0 = vec3(V[I[i]].x, V[I[i]].y, V[I[i]].z);
+    const p1 = vec3(V[I[i + 1]].x, V[I[i + 1]].y, V[I[i + 1]].z);
+    const p2 = vec3(V[I[i + 2]].x, V[I[i + 2]].y, V[I[i + 2]].z);
     var n = p1.sub(p0).cross(p2.sub(p0)).norm();
-    N[I[i + 0] * 3 + 0] += n.x;
-    N[I[i + 0] * 3 + 1] += n.y;
-    N[I[i + 0] * 3 + 2] += n.z;
-
-    N[I[i + 1] * 3 + 0] += n.x;
-    N[I[i + 1] * 3 + 1] += n.y;
-    N[I[i + 1] * 3 + 2] += n.z;
-
-    N[I[i + 2] * 3 + 0] += n.x;
-    N[I[i + 2] * 3 + 1] += n.y;
-    N[I[i + 2] * 3 + 2] += n.z;
+    N[I[i]].add(n);
+    N[I[i + 1]].add(n);
+    N[I[i + 2]].add(n);
   }
+  for (let i = 0; i < N.length; i++) N[i] = N[i].norm();
 }
 
 function getVB(figure) {
@@ -119,11 +77,8 @@ function getVB(figure) {
 
   getNormals(V, I, N);
 
-  for (let i = 0; i < V.length - 2; i += 3) {
-    let n = vec3(V[i] - C.x, V[i + 1] - C.y, V[i + 2] - C.z).norm();
-    // if (n.x * n.z < 0) n.negate();
-    // VB.push(V[i], V[i + 1], V[i + 2], n.x, n.y, n.z);
-    VB.push(V[i], V[i + 1], V[i + 2], n.x, n.y, n.z);
+  for (let i = 0; i < V.length; i++) {
+    VB.push(...V[i].toArrayV(), ...N[i].toArrayV());
   }
 }
 

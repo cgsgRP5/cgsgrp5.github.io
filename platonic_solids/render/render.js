@@ -71,9 +71,9 @@ export class _render {
     prim.mtl.ubo[0].update(
       this.gl,
       new Float32Array([
-        ...mat4().matrMulmatr(prim.mTrans, this.camera.matrVP).toArray(),
-        ...this.camera.matrVP.toArray(),
-        ...mat4().ortho(-1, 1, -1, 1, -1, 1).toArray(),
+        ...mat4().matrMulmatr(prim.mTrans, this.camera.matrVP).toArrayM(),
+        ...this.camera.matrVP.toArrayM(),
+        ...mat4().ortho(-1, 1, -1, 1, -1, 1).toArrayM(),
         ...this.camera.loc.toArray4(),
         ...this.camera.at.toArray4(),
         ...this.camera.up.toArray4(),

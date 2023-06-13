@@ -3,40 +3,38 @@
 precision highp float;
 
 out vec4 out_color;
-
 in vec3 DrawPos;
 in vec4 DrawColor;
 in vec3 DrawNormal;
-in vec3 Loc, At, Up, Right;
 
-vec3 Shade(vec3 P, vec3 N, vec3 color)
-{
-  vec3 L = normalize(vec3(1));
-  vec3 LC = vec3(1);
-  //color = vec3(0);
-  vec3 V = normalize(Loc - P);
+vec3 Shade(vec3 P, vec3 N, vec3 LightPos, vec3 in_color) {
+  vec3 L = normalize(LightPos);
+  vec3 LC = vec3(1, 1, 1);
+  vec3 color = in_color * 0.5;
+  vec3 V = normalize(P - LightPos);
 
   // Ambient
-  // color = Ka;
-
-  N = faceforward(N, V, N);
-
+  //N = faceforward(N, V, N);
   // Diffuse
-  color += abs(dot(N, L)) * 0.3 * LC;
+  color += max(0.1, dot(N, L)) * 0.2 * LC;
 
   // Specular
-  vec3 R = reflect(V, N);
-  color += pow(max(dot(R, L), 0.0), 10.0) * 0.2 * LC;
+  vec3 R = reflect(-L, N);
+
+  color += pow(max(0.1, dot(R, L)), 15.0) * 0.2 * LC;
 
   return color;
 }
-void main(void)
-{
+
+void main(void) {
   float l = length(DrawPos.xyz);
   vec3 c1, c2, col;
   c1 = vec3(1, 0, 0) * vec3(l * l * l * l * l);
   c2 = vec3(0, 0, 1) * vec3(abs(DrawPos.x) + abs(DrawPos.y) + abs(DrawPos.z));
 
   col = mix(c2, c1, vec3(.78));
-  out_color = vec4(Shade(DrawPos, normalize(DrawPos), col), 1);
+  out_color = vec4(Shade(DrawPos, DrawNormal, vec3(10, 5, 8), col), 1);
+  //out_color = vec4(Shade(DrawPos, DrawNormal, vec3(10, 5, 8), vec3(.1)), 1);
+
+  // out_color = vec4(DrawNormal, 1);
 }

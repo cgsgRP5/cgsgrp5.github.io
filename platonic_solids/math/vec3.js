@@ -57,6 +57,10 @@ export class _vec3 {
       this.x * vec3.y - this.y * vec3.x
     );
   }
+  toArrayV() {
+    return [this.x, this.y, this.z];
+  }
+
   toArray4() {
     return [this.x, this.y, this.z, 0];
   }
