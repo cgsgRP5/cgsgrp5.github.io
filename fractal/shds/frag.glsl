@@ -32,14 +32,14 @@ highp float Julia(highp vec2 z, highp vec2 c)
 void drawMB(highp vec2 z)
 {
     highp float n = Julia(z, z);
-    o_color = vec4(10. * n / 255.0, n / 255.0, n * 8.0 / 255.0, 1.0);
+    o_color = vec4(10. * n / 255.0, 5.*n / 255.0, n  / 255.0, 1.0);
 }
 
 void drawJulia(highp vec2 z)
 {
     highp vec2 c = vec2(0.47 + 0.2 * sin(Time + 1.5), 0.51 + 0.11 * sin(2.1 * Time));
     highp float n = Julia(z, c);
-    o_color = vec4(10. * n / 512.0, n / 512.0, n * 8.0 / 512.0, 1.0);
+    o_color = vec4(10. * n / 512.0, 5.*n / 512.0, n / 512.0, 1.0);
 }
 
 void main(void)
